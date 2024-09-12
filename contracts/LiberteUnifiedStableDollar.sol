@@ -355,32 +355,25 @@ abstract contract ERC165 is IERC165 {
 contract LiberteUnifiedStableDollar is ERC20, ERC20Pausable, Ownable {
     bool private mintingFinished = false;
 
-    constructor() ERC20("Liberte Unified Stable Dollar", "USDL") {
-        // The contract deployer is automatically the owner
-    }
+    constructor() ERC20("Liberte Unified Stable Dollar", "USDL") {}
 
-    // Function to pause the contract
     function pause() public onlyOwner {
         _pause();
     }
 
-    // Function to unpause the contract
     function unpause() public onlyOwner {
         _unpause();
     }
 
-    // Function to mint tokens, can be called only once
     function mint(uint256 amount) public onlyOwner {
         uint256 amountToMint = amount * 10 ** decimals();
         _mint(_msgSender(), amountToMint);
     }
 
-    // Function to burn tokens owned by the caller
     function burn(uint256 amount) external onlyOwner {
         _burn(_msgSender(), amount);
     }
 
-    // Override transfer function to include blacklist check
     function _transfer(
         address from,
         address to,
